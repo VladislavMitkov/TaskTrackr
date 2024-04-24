@@ -3,6 +3,7 @@ import { useState } from "react";
 const App = () => {
   const url = "http://localhost:5000";
   const [task, setTask] = useState({ name: "", id: null });
+  const [updatedTask, setUpdatedTask] = useState(null);
 
   const dummyData = { name: "first task", id: 2 };
   const updatedDummyData = { name: "Updated task", id: 2 };
@@ -40,12 +41,22 @@ const App = () => {
       },
       body: JSON.stringify(updatedDummyData),
     })
-      .then(() => {
-        if (task) {
-          setTask(updatedDummyData);
-        } else {
-          alert("There's no task yet");
+      // .then(() => {
+      //   if (task) {
+      //     setTask(updatedDummyData);
+      //   } else {
+      //     alert("There's no task yet");
+      //   }
+      // })
+      .then((response) => {
+        if (!response?.ok) {
+          throw new Error("Network response was not ok");
         }
+        return response.json();
+      })
+      .then((data) => {
+        setTask(data.payload);
+        setUpdatedTask(data.payload);
       })
       .catch((err) => {
         console.error("Error:", err);
