@@ -3,7 +3,6 @@ import { useState } from "react";
 const App = () => {
   const url = "http://localhost:5000";
   const [task, setTask] = useState(null);
-  const [updatedTask, setUpdatedTask] = useState(null);
 
   const dummyData = { name: "first task", id: 2 };
   const updatedDummyData = { name: "Updated task", id: 2 };
